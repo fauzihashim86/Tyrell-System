@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tyrell (Shuffle Game)</title>
+</head>
+<body>
+    <div>
+        <label for="noOfPlayer">Number of players: </label>
+        <input type="number" id="noOfPlayer" min="1"/>
+        <button id="shuffle">Shuffle</button>
+    </div>
+    <div id="display"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#shuffle').click(distributeCards);
+            function distributeCards() {
+                const players = $('#noOfPlayer').val();
+                if(players <= 0){
+                    alert("Input value does not exist or value is invalid");
+                    $("#display").html("");
+                    $("#noOfPlayer").val("");
+                } else {
+                    $.ajax({
+                        url: "getcard.php?players="+players,
+                        method: 'GET',
+                        success: function(response) {
+                            $("#display").html(response);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
